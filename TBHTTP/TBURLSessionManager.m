@@ -23,42 +23,42 @@
 
 -(instancetype)init
 {
-    if (!(self = [super init])) return nil;
-    self.mutableData = [NSMutableData new];
-    return self;
+  if (!(self = [super init])) return nil;
+  self.mutableData = [NSMutableData new];
+  return self;
 }
 
 -(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
-    if (data)
-    {
-        [self.mutableData appendData:data];
-    }
+  if (data)
+  {
+    [self.mutableData appendData:data];
+  }
 }
 
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-    NSDictionary *json;
-    if (error)
-    {
-        NSLog(@"%@", error);
-        return;
-    }
-    
-    error = nil;
-    
-    if (self.mutableData)
-    {
-        json = [NSJSONSerialization JSONObjectWithData:self.mutableData options:NSJSONReadingMutableContainers error:&error];
-    }
-    
-    if (error)
-    {
-        NSLog(@"\nERROR\n\n");
-        NSLog(@"%@", error.localizedDescription);
-    }
-    
-    self.completion(task.response, json, error);
+  NSDictionary *json;
+  if (error)
+  {
+    NSLog(@"%@", error);
+    return;
+  }
+  
+  error = nil;
+  
+  if (self.mutableData)
+  {
+    json = [NSJSONSerialization JSONObjectWithData:self.mutableData options:NSJSONReadingMutableContainers error:&error];
+  }
+  
+  if (error)
+  {
+    NSLog(@"\nERROR\n\n");
+    NSLog(@"%@", error.localizedDescription);
+  }
+  
+  self.completion(task.response, json, error);
 }
 
 @end
@@ -77,33 +77,33 @@
 
 -(instancetype)init
 {
-    return [self initWithSessionConfiguration:nil];
+  return [self initWithSessionConfiguration:nil];
 }
 
 -(instancetype)initWithSessionConfiguration: (NSURLSessionConfiguration*)config
 {
-    if (!(self = [super init])) return nil;
-    
-    if (!config) config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    self.sessionConfig = config;
-    
-    self.operationQueue = [NSOperationQueue new];
-    self.operationQueue.maxConcurrentOperationCount = 1;
-    
-    self.session = [NSURLSession
-                    sessionWithConfiguration:self.sessionConfig
-                    delegate:self delegateQueue:self.operationQueue];
-    
-    self.taskDelegates = [NSMutableDictionary new];
-    
-    return self;
+  if (!(self = [super init])) return nil;
+  
+  if (!config) config = [NSURLSessionConfiguration defaultSessionConfiguration];
+  self.sessionConfig = config;
+  
+  self.operationQueue = [NSOperationQueue new];
+  self.operationQueue.maxConcurrentOperationCount = 1;
+  
+  self.session = [NSURLSession
+                  sessionWithConfiguration:self.sessionConfig
+                  delegate:self delegateQueue:self.operationQueue];
+  
+  self.taskDelegates = [NSMutableDictionary new];
+  
+  return self;
 }
 
 -(void)URLSession:(NSURLSession *)session
      downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location
 {
-    
+  
 }
 
 #pragma mark -
@@ -111,9 +111,9 @@ didFinishDownloadingToURL:(NSURL *)location
 - (NSURLSessionDataTask *)dataTaskWithRequest: (NSMutableURLRequest *)request
                                    completion: (TBURLSessionTaskBlock)completion
 {
-    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request];
-    [self addDelegateForDataTask:dataTask withCompletion:completion];
-    return dataTask;
+  NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request];
+  [self addDelegateForDataTask:dataTask withCompletion:completion];
+  return dataTask;
 }
 
 #pragma mark -
@@ -121,30 +121,30 @@ didFinishDownloadingToURL:(NSURL *)location
 - (void)addDelegateForDataTask:(NSURLSessionDataTask *)datatask
                 withCompletion:(TBURLSessionTaskBlock)completion
 {
-    TBURLSessionManagerTaskDelegate *delegate =
-    [TBURLSessionManagerTaskDelegate new];
-    
-    delegate.sessionManager = self;
-    delegate.completion = completion;
-    [self setDelegate:delegate forTask:datatask];
+  TBURLSessionManagerTaskDelegate *delegate =
+  [TBURLSessionManagerTaskDelegate new];
+  
+  delegate.sessionManager = self;
+  delegate.completion = completion;
+  [self setDelegate:delegate forTask:datatask];
 }
 
 - (void)setDelegate:(TBURLSessionManagerTaskDelegate *)delegate
             forTask:(NSURLSessionTask *)task
 {
-    // TODO: Probably not safe
-    self.taskDelegates[@(task.taskIdentifier)] = delegate;
+  // TODO: Probably not safe
+  self.taskDelegates[@(task.taskIdentifier)] = delegate;
 }
 
 - (TBURLSessionManagerTaskDelegate *)delegateForTask: (NSURLSessionTask *)task
 {
-    return self.taskDelegates[@(task.taskIdentifier)];
+  return self.taskDelegates[@(task.taskIdentifier)];
 }
 
 - (void)removeDelegateForTask: (NSURLSessionTask *)task
 {
-    // TODO: Also unsafe
-    [self.taskDelegates removeObjectForKey:@(task.taskIdentifier)];
+  // TODO: Also unsafe
+  [self.taskDelegates removeObjectForKey:@(task.taskIdentifier)];
 }
 
 #pragma mark - Delegation
@@ -152,17 +152,17 @@ didFinishDownloadingToURL:(NSURL *)location
 -(void)URLSession:(NSURLSession *)session
          dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
-    TBURLSessionManagerTaskDelegate *delegate = [self delegateForTask:dataTask];
-    [delegate URLSession:session dataTask:dataTask didReceiveData:data];
+  TBURLSessionManagerTaskDelegate *delegate = [self delegateForTask:dataTask];
+  [delegate URLSession:session dataTask:dataTask didReceiveData:data];
 }
 
 -(void)URLSession:(NSURLSession *)session
              task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-    TBURLSessionManagerTaskDelegate *delegate = [self delegateForTask:task];
-    [delegate URLSession:session task:task didCompleteWithError:error];
-    
-    [self removeDelegateForTask:task];
+  TBURLSessionManagerTaskDelegate *delegate = [self delegateForTask:task];
+  [delegate URLSession:session task:task didCompleteWithError:error];
+  
+  [self removeDelegateForTask:task];
 }
 
 @end

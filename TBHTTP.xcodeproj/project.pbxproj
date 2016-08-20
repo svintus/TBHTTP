@@ -26,7 +26,7 @@
 		1CE32D1D1D68ADEA00C0E996 /* TBURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBURLSessionManager.h; sourceTree = "<group>"; };
 		1CE32D1E1D68ADEA00C0E996 /* TBURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBURLSessionManager.m; sourceTree = "<group>"; };
 		1CE32D201D68AEFB00C0E996 /* TBHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBHTTPSessionManager.h; sourceTree = "<group>"; };
-		1CE32D211D68AEFB00C0E996 /* TBHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBHTTPSessionManager.m; sourceTree = "<group>"; };
+		1CE32D211D68AEFB00C0E996 /* TBHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = TBHTTPSessionManager.m; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +46,9 @@
 				1CE32D0B1D68ABD800C0E996 /* TBHTTP */,
 				1CE32D0A1D68ABD800C0E996 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		1CE32D0A1D68ABD800C0E996 /* Products */ = {
 			isa = PBXGroup;
