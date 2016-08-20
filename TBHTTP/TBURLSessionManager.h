@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^TBURLSessionTaskBlock)
+(NSURLResponse *response, id responseObject, NSError *error);
+
 @interface TBURLSessionManager : NSObject
+<NSURLSessionDelegate, NSURLSessionTaskDelegate,
+NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
+
+-(instancetype)initWithSessionConfiguration: (NSURLSessionConfiguration*)config;
+
+
+- (NSURLSessionDataTask *)dataTaskWithRequest: (NSMutableURLRequest *)request
+                                   completion: (TBURLSessionTaskBlock)completion;
 
 @end
