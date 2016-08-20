@@ -11,6 +11,7 @@
 		1CE32D111D68ABD800C0E996 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE32D101D68ABD800C0E996 /* main.m */; };
 		1CE32D131D68ABD900C0E996 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CE32D121D68ABD900C0E996 /* Assets.xcassets */; };
 		1CE32D161D68ABD900C0E996 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CE32D141D68ABD900C0E996 /* MainMenu.xib */; };
+		1CE32D1F1D68ADEA00C0E996 /* TBURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE32D1E1D68ADEA00C0E996 /* TBURLSessionManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,8 @@
 		1CE32D121D68ABD900C0E996 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1CE32D151D68ABD900C0E996 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1CE32D171D68ABD900C0E996 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CE32D1D1D68ADEA00C0E996 /* TBURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBURLSessionManager.h; sourceTree = "<group>"; };
+		1CE32D1E1D68ADEA00C0E996 /* TBURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBURLSessionManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +58,8 @@
 			children = (
 				1CE32D0C1D68ABD800C0E996 /* AppDelegate.h */,
 				1CE32D0D1D68ABD800C0E996 /* AppDelegate.m */,
+				1CE32D1D1D68ADEA00C0E996 /* TBURLSessionManager.h */,
+				1CE32D1E1D68ADEA00C0E996 /* TBURLSessionManager.m */,
 				1CE32D121D68ABD900C0E996 /* Assets.xcassets */,
 				1CE32D141D68ABD900C0E996 /* MainMenu.xib */,
 				1CE32D171D68ABD900C0E996 /* Info.plist */,
@@ -144,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CE32D111D68ABD800C0E996 /* main.m in Sources */,
+				1CE32D1F1D68ADEA00C0E996 /* TBURLSessionManager.m in Sources */,
 				1CE32D0E1D68ABD800C0E996 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
