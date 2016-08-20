@@ -97,6 +97,7 @@
 		1CE32D011D68ABD800C0E996 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = TB;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = TunnelBear;
 				TargetAttributes = {
