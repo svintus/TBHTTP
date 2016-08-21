@@ -308,6 +308,7 @@
 				1CE32D1C1D68ABD900C0E996 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
