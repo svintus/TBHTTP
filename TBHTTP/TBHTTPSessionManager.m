@@ -12,8 +12,40 @@
 @property (nonatomic) NSMutableDictionary *HTTPHeaderFields;
 @end
 
-
 @implementation TBHTTPSessionManager
+
+#pragma mark - Init
+
++ (instancetype)sessionManager
+{
+  return [[[self class] alloc] initWithBaseURL:nil];
+}
+
+- (instancetype)init
+{
+  return [self initWithBaseURL:nil];
+}
+
+- (instancetype)initWithBaseURL:(NSURL *)url
+{
+  return [self initWithBaseURL:url sessionConfiguration:nil];
+}
+
+- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config
+{
+  return [self initWithBaseURL:nil sessionConfiguration:config];
+}
+
+- (instancetype)initWithBaseURL:(NSURL *)url
+           sessionConfiguration:(NSURLSessionConfiguration *)config
+{
+  if (!(self = [super initWithSessionConfiguration:config])) return nil;
+  self.HTTPHeaderFields = [NSMutableDictionary new];
+  self.baseURL = url;
+  return self;
+}
+
+#pragma mark - Public Methods
 
 - (void)POST:(NSString *)path parameters:(NSDictionary *)parameters
   completion:(TBHTTPCompletion)completion

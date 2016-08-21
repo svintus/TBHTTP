@@ -15,6 +15,12 @@ typedef void (^TBHTTPCompletion)
 
 @property (nonatomic) NSURL *baseURL;
 
++ (instancetype)sessionManager;
+- (instancetype)initWithBaseURL:(NSURL *)url;
+- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config;
+- (instancetype)initWithBaseURL:(NSURL *)url
+           sessionConfiguration:(NSURLSessionConfiguration *)config;
+
 - (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field;
 
 - (void)POST:(NSString *)path parameters:(NSDictionary *)parameters
