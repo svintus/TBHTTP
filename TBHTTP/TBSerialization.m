@@ -53,10 +53,32 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
        [request setValue:value forHTTPHeaderField:field];
    }];
   
-  if (multipartRequest)
-    [self setupParameters:parameters forMultiPartRequest:request];
-  else
-    [self setupParameters:parameters forRequest:request];
+  if ([request.HTTPMethod isEqualToString:@"POST"])
+  {
+    if (multipartRequest)
+      [self setupParameters:parameters forMultiPartPOSTRequest:request];
+    else
+      [self setupParameters:parameters forPOSTRequest:request];
+  }
+  else //GET .. for now
+  {
+    if([parameters isKindOfClass:[NSDictionary class]])
+    {
+      NSDictionary *parameterDict = (NSDictionary*)parameters;
+      if(parameterDict.count > 0)
+      {
+        NSString *urlString =
+        [NSString stringWithFormat:@"%@?%@", request.URL,
+         [self parameterStringFromDictionarty:parameters]];
+        
+        request.URL = [NSURL URLWithString:urlString];
+        NSLog(@"%@", urlString);
+      }
+    }
+    else
+      [NSException raise:NSInvalidArgumentException
+                  format:@"GET parameters must be provided as NSDictionary."];
+  }
   return request;
 }
 
@@ -130,7 +152,7 @@ NSString * mimeTypeFromFileExtension(NSString *extension)
 }
 
 - (void)setupParameters: (NSDictionary *) parameters
-             forRequest: (NSMutableURLRequest *)request
+        forPOSTRequest: (NSMutableURLRequest *)request
 {
   const char *parameterString =
   [[self parameterStringFromDictionarty:parameters] UTF8String];
@@ -144,7 +166,7 @@ NSString * mimeTypeFromFileExtension(NSString *extension)
 }
 
 - (void)setupParameters: (NSDictionary *) parameters
-    forMultiPartRequest: (NSMutableURLRequest *)request
+forMultiPartPOSTRequest: (NSMutableURLRequest *)request
 {
   int parameterCount = (int)[parameters count];
   __block int parameterIndex = 0;

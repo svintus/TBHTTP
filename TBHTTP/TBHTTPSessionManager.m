@@ -88,6 +88,31 @@
   [self performRequest:request withCompeletion:completion];
 }
 
+-  (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
+  completion:(TBHTTPCompletion)completion
+{
+  NSURL *requestURL;
+  
+  if (self.baseURL)
+    requestURL = [NSURL URLWithString:path relativeToURL: self.baseURL];
+  else
+    requestURL = [NSURL URLWithString:path];
+  
+  
+  NSError *serializationError = nil;
+  NSURLRequest *request =
+  [self.requestSerializer requestWithURL:requestURL method:@"GET"
+                              parameters:parameters error:&serializationError];
+  
+  if (serializationError)
+  {
+    NSLog(@"GET Serialization error: %@", serializationError);
+    return;
+  }
+  
+  [self performRequest:request withCompeletion:completion];
+}
+
 #pragma mark -
 - (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field
 {
