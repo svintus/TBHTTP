@@ -18,7 +18,7 @@ NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
 -(instancetype)initWithSessionConfiguration: (NSURLSessionConfiguration*)config;
 
 
-- (NSURLSessionDataTask *)dataTaskWithRequest: (NSMutableURLRequest *)request
+- (NSURLSessionDataTask *)dataTaskWithRequest: (NSURLRequest *)request
                                    completion: (TBURLSessionTaskBlock)completion;
 
 @end

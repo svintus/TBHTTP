@@ -8,6 +8,8 @@
 
 #import "TBHTTPSessionManager.h"
 
+#pragma mark - TBHTTPSessionManager
+//------------------------------------------------------------------------
 @interface TBHTTPSessionManager()
 @property (nonatomic) NSMutableDictionary *HTTPHeaderFields;
 @end
@@ -42,6 +44,7 @@
   if (!(self = [super initWithSessionConfiguration:config])) return nil;
   self.HTTPHeaderFields = [NSMutableDictionary new];
   self.baseURL = url;
+  self.requestSerializer = [TBHTTPRequestSerializer serializer];
   return self;
 }
 
@@ -50,14 +53,24 @@
 - (void)POST:(NSString *)path parameters:(NSDictionary *)parameters
   completion:(TBHTTPCompletion)completion
 {
-  NSURL *requestURL = [NSURL URLWithString:path relativeToURL: self.baseURL];
+  NSURL *requestURL;
   
-  NSMutableURLRequest *request =
-  [NSMutableURLRequest requestWithURL:requestURL];
-  [request setHTTPMethod:@"POST"];
-  [self setupParameters:parameters forRequest:request];
+  if (self.baseURL)
+    requestURL = [NSURL URLWithString:path relativeToURL: self.baseURL];
+  else
+    requestURL = [NSURL URLWithString:path];
   
-  [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+  
+  NSError *serializationError = nil;
+  NSURLRequest *request =
+  [self.requestSerializer requestWithURL:requestURL method:@"POST"
+                              parameters:parameters error:&serializationError];
+  
+  if (serializationError)
+  {
+    NSLog(@"POST Serialization error: %@", serializationError);
+    return;
+  }
   
   [self performRequest:request withCompeletion:completion];
 }
@@ -66,60 +79,10 @@
 - (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field
 {
   [self.HTTPHeaderFields setValue:value forKey:field];
+  self.requestSerializer.HTTPHeaderFields = self.HTTPHeaderFields;
 }
 
-
-#pragma mark -
-- (NSString *)parameterStringFromDictionarty: (NSDictionary *)dictionary
-{
-  NSMutableArray *parameters = [NSMutableArray new];
-  
-  for (NSString *key in dictionary)
-  {
-    if ([dictionary[key] isKindOfClass:[NSString class]])
-    {
-      // Percent escaped
-      NSString *encodedValue = dictionary[key];
-      encodedValue =
-      [encodedValue stringByAddingPercentEncodingWithAllowedCharacters:
-       [[NSCharacterSet characterSetWithCharactersInString:
-         @":/=,!$&'()*+;[]@#?^%\"`<>{}\\|~ "] invertedSet]];
-      
-      // Query string
-      [parameters addObject:
-       [NSString stringWithFormat:@"%@=%@", key, encodedValue]];
-    }
-  }
-  
-  NSLog(@"%@", [parameters componentsJoinedByString:@"&"]);
-  return [parameters componentsJoinedByString:@"&"];
-}
-
-- (void)setupParameters: (NSDictionary *) parameters
-             forRequest: (NSMutableURLRequest *)request
-{
-  // sending data
-  //  NSString *boundary = @"TBHTTPReqeustBounday";
-  //  NSString *contentType = [@"multipart/form-data; boundary="
-  //                           stringByAppendingString:boundary];
-  
-  const char *parameterString =
-  [[self parameterStringFromDictionarty:parameters] UTF8String];
-  
-  NSMutableData *data =
-  [NSMutableData dataWithBytes:parameterString length:strlen(parameterString)];
-  
-  [self.HTTPHeaderFields enumerateKeysAndObjectsUsingBlock:
-   ^(NSString *field, NSString *value, BOOL *stop)
-  {
-    if (![request valueForHTTPHeaderField:field])
-      [request setValue:value forHTTPHeaderField:field];
-  }];
-  
-  [request setHTTPBody:data];
-}
-
-- (void)performRequest: (NSMutableURLRequest *)request
+- (void)performRequest: (NSURLRequest *)request
        withCompeletion:(TBHTTPCompletion)completion
 {
   NSURLSessionDataTask *dataTask =

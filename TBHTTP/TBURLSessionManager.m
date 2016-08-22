@@ -108,7 +108,7 @@ didFinishDownloadingToURL:(NSURL *)location
 
 #pragma mark -
 
-- (NSURLSessionDataTask *)dataTaskWithRequest: (NSMutableURLRequest *)request
+- (NSURLSessionDataTask *)dataTaskWithRequest: (NSURLRequest *)request
                                    completion: (TBURLSessionTaskBlock)completion
 {
   NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request];
