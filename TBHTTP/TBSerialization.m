@@ -115,6 +115,18 @@ NSString * percentEscapedString(NSString *string)
      @":/=,!$&'()*+;[]@#?^%\"`<>{}\\|~ "] invertedSet]];
 }
 
+NSString * mimeTypeFromFileExtension(NSString *extension)
+{
+  NSString *UTI = (__bridge_transfer NSString *)
+  UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
+                                        (__bridge CFStringRef)extension, NULL);
+  NSString *contentType = (__bridge_transfer NSString *)
+  UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)UTI,
+                                  kUTTagClassMIMEType);
+  
+  return contentType ?: @"application/octet-stream";
+}
+
 - (void)setupParameters: (NSDictionary *) parameters
              forRequest: (NSMutableURLRequest *)request
 {
@@ -159,29 +171,31 @@ NSString * percentEscapedString(NSString *string)
      {
        NSString *fileName;
        NSData *fileData;
+       NSString *contentType;
        
        if ([value isKindOfClass:[NSURL class]])
        {
          fileName = [value lastPathComponent];
          fileData = [NSData dataWithContentsOfURL:value];
+         contentType = mimeTypeFromFileExtension([value pathExtension]);
        }
        else
        {
-         // TODO:
          fileName = @"TBHTTPUserFile";
          fileData = value;
-         
-         [data appendData:
-          [[NSString stringWithFormat:@"Content-Disposition: attachment;"
-            " name=\"%@\"; filename=\"%@\"%@", key, fileName, CRLF]
-           dataUsingEncoding:NSUTF8StringEncoding]];
-         // TODO: Dont assume
-         [data appendData:
-          [[NSString stringWithFormat:@"Content-Type: application/octet-stream%@%@",
-            CRLF, CRLF] dataUsingEncoding:NSUTF8StringEncoding]];
-         
-         [data appendData:fileData];
+         contentType = @"application/octet-stream";
        }
+       
+       [data appendData:
+        [[NSString stringWithFormat:@"Content-Disposition: attachment;"
+          " name=\"%@\"; filename=\"%@\"%@", key, fileName, CRLF]
+         dataUsingEncoding:NSUTF8StringEncoding]];
+       
+       [data appendData:
+        [[NSString stringWithFormat:@"Content-Type: %@%@%@",
+          contentType, CRLF, CRLF] dataUsingEncoding:NSUTF8StringEncoding]];
+       
+       [data appendData:fileData];
      }
      
      parameterIndex ++;
