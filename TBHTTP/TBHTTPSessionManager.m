@@ -45,7 +45,20 @@
   self.HTTPHeaderFields = [NSMutableDictionary new];
   self.baseURL = url;
   self.requestSerializer = [TBHTTPRequestSerializer serializer];
+  self.responseSerializer = [TBJSONResponseSerializer serializer];
   return self;
+}
+
+- (void)setRequestSerializer:(TBHTTPRequestSerializer *)requestSerializer
+{
+  NSParameterAssert(requestSerializer);
+  _requestSerializer = requestSerializer;
+}
+
+-(void)setResponseSerializer:(TBHTTPResponseSerializer *)responseSerializer
+{
+  NSParameterAssert(responseSerializer);
+  [super setResponseSerializer:responseSerializer];
 }
 
 #pragma mark - Public Methods

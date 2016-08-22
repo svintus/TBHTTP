@@ -38,27 +38,30 @@
 
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-  NSDictionary *json;
-  if (error)
+  NSError *serializationError = nil;
+  id responseObject = [self.sessionManager.responseSerializer
+                       serializedResponseFromURLResponse:task.response
+                       data:self.mutableData error:&serializationError];
+  
+  if (serializationError)
   {
-    NSLog(@"%@", error);
-    return;
+    TBHTTPResponseSerializer *httpSerializer = [TBHTTPResponseSerializer serializer];
+    if ([[task.response MIMEType] isEqualToString:httpSerializer.MIMEType])
+    {
+      NSError *httpSerializationError = nil;
+      responseObject = [httpSerializer
+                        serializedResponseFromURLResponse:task.response
+                        data:self.mutableData error:&httpSerializationError];
+      
+      if (httpSerializationError)
+      {
+        responseObject = nil;
+        NSLog(@"Errr...");
+      }
+    }
   }
   
-  error = nil;
-  
-  if (self.mutableData)
-  {
-    json = [NSJSONSerialization JSONObjectWithData:self.mutableData options:NSJSONReadingMutableContainers error:&error];
-  }
-  
-  if (error)
-  {
-    NSLog(@"\nERROR\n\n");
-    NSLog(@"%@", error.localizedDescription);
-  }
-  
-  self.completion(task.response, json, error);
+  self.completion(task.response, responseObject, error);
 }
 
 @end

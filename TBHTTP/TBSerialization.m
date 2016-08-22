@@ -8,6 +8,8 @@
 
 #import "TBSerialization.h"
 
+#pragma mark - TBHTTPRequestSerializer
+//------------------------------------------------------------------------
 static NSString * const TBHTTPMultipartFormBoundary = @"TBHTTPMultipartFormBoundary";
 static NSString * const CRLF = @"\r\n";
 
@@ -104,7 +106,7 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
      }
    }];
   
-  NSLog(@"%@", [parameters componentsJoinedByString:@"&"]);
+//  NSLog(@"%@", [parameters componentsJoinedByString:@"&"]);
   return [parameters componentsJoinedByString:@"&"];
 }
 
@@ -206,9 +208,80 @@ NSString * mimeTypeFromFileExtension(NSString *extension)
   
   [data appendData:[TBMultipartFormFinalBoundary(boundary)
                     dataUsingEncoding:self.stringEncoding]];
-  NSLog(@"%@", [[NSString alloc] initWithData:data encoding:self.stringEncoding]);
 //  NSString *altSring = [NSString stringWithUTF8String:[data bytes]];
   [request setHTTPBody:data];
 }
+@end
 
+#pragma mark - TBHTTPResponseSerializer
+//------------------------------------------------------------------------
+@interface TBHTTPResponseSerializer()
+@property (nonatomic) NSStringEncoding stringEncoding;
+@property (nonatomic) NSString *MIMEType;
+@end
+
+@implementation TBHTTPResponseSerializer
+
++ (instancetype)serializer
+{
+  return [[self alloc] init];
+}
+
+-(instancetype)init
+{
+  if (!(self = [super init]))return nil;
+  self.stringEncoding = NSUTF8StringEncoding;
+  self.MIMEType = @"text/html";
+  return self;
+}
+
+-(id)serializedResponseFromURLResponse:(NSURLResponse *)response
+                                  data:(NSData *)data
+                                 error:(NSError *__autoreleasing *)error
+{
+  return [NSString stringWithUTF8String:[data bytes]];
+}
+@end
+
+
+@interface TBJSONResponseSerializer()
+
+@end
+
+@implementation TBJSONResponseSerializer
+
++ (instancetype)serializer
+{
+  return [[self alloc] init];
+}
+
+-(instancetype)init
+{
+  if (!(self = [super init]))return nil;
+  self.stringEncoding = NSUTF8StringEncoding;
+  self.MIMEType = @"application/json";
+  return self;
+}
+
+-(id)serializedResponseFromURLResponse:(NSURLResponse *)response
+                                  data:(NSData *)data
+                                 error:(NSError *__autoreleasing *)error
+{
+  NSDictionary *json;
+  NSError *serializationError = nil;
+  
+  json = [NSJSONSerialization
+          JSONObjectWithData:data options:NSJSONReadingMutableContainers
+          error:&serializationError];
+  
+  if (serializationError)
+  {
+    NSLog(@"JSON Serialization error: %@", serializationError);
+    *error = serializationError;
+    //[NSError alloc] initWithDomain:*er code:(NSInteger) userInfo:(nullable NSDictionary *)
+    return nil;
+  }
+  
+  return json;
+}
 @end

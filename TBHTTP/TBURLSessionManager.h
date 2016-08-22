@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TBSerialization.h"
 
 typedef void (^TBURLSessionTaskBlock)
 (NSURLResponse *response, id responseObject, NSError *error);
@@ -14,6 +15,8 @@ typedef void (^TBURLSessionTaskBlock)
 @interface TBURLSessionManager : NSObject
 <NSURLSessionDelegate, NSURLSessionTaskDelegate,
 NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
+
+@property (nonatomic) TBHTTPResponseSerializer *responseSerializer;
 
 -(instancetype)initWithSessionConfiguration: (NSURLSessionConfiguration*)config;
 

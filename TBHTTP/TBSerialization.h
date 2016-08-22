@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+//------------------------------------------------------------------------
 @protocol TBURLRequestSerialization
 - (NSURLRequest *)serializedRequestFromRequest: (NSURLRequest *)request
                               multipartRequest: (BOOL)multipartRequest
@@ -15,18 +16,13 @@
                                          error: (NSError **)error;
 @end
 
-@protocol TBURLResponseSerialization
-@end
-
-
 @interface TBHTTPRequestSerializer : NSObject <TBURLRequestSerialization>
-@property (nonatomic) NSDictionary *HTTPHeaderFields;
-@property (nonatomic) NSStringEncoding stringEncoding;
-
 + (instancetype)serializer;
-
 - (NSURLRequest *)requestWithURL:(NSURL *)url method:(NSString *)method
                       parameters:(id)parameters error:(NSError **)error;
+
+@property (nonatomic) NSDictionary *HTTPHeaderFields;
+@property (nonatomic) NSStringEncoding stringEncoding;
 
 @end
 
@@ -34,6 +30,20 @@
 
 @end
 
-@interface TBHTTPResponseSerializer
+//------------------------------------------------------------------------
+@protocol TBURLResponseSerialization
+-(id)serializedResponseFromURLResponse:(NSURLResponse *)response
+                                  data:(NSData *)data
+                                 error:(NSError **)error;
+
+@end
+
+@interface TBHTTPResponseSerializer: NSObject <TBURLResponseSerialization>
++ (instancetype)serializer;
+
+@property (nonatomic, readonly) NSString *MIMEType;
+@end
+
+@interface TBJSONResponseSerializer : TBHTTPResponseSerializer
 
 @end

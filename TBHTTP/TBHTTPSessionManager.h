@@ -7,7 +7,6 @@
 //
 
 #import "TBURLSessionManager.h"
-#import "TBSerialization.h"
 
 typedef void (^TBHTTPCompletion)
 (NSURLResponse *response, id responseObject, NSError *error);
@@ -16,7 +15,6 @@ typedef void (^TBHTTPCompletion)
 
 @property (nonatomic) NSURL *baseURL;
 @property (nonatomic) TBHTTPRequestSerializer  *requestSerializer;
-@property (nonatomic) TBHTTPResponseSerializer *responseSerializer;
 
 + (instancetype)sessionManager;
 - (instancetype)initWithBaseURL:(NSURL *)url;
