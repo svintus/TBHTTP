@@ -13,6 +13,7 @@
 		1CE32D161D68ABD900C0E996 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CE32D141D68ABD900C0E996 /* MainMenu.xib */; };
 		1CE32D1F1D68ADEA00C0E996 /* TBURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE32D1E1D68ADEA00C0E996 /* TBURLSessionManager.m */; };
 		1CE32D221D68AEFB00C0E996 /* TBHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE32D211D68AEFB00C0E996 /* TBHTTPSessionManager.m */; };
+		1CE966F91D69FD96004594E8 /* TBSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE966F81D69FD96004594E8 /* TBSerialization.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,8 @@
 		1CE32D1E1D68ADEA00C0E996 /* TBURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBURLSessionManager.m; sourceTree = "<group>"; };
 		1CE32D201D68AEFB00C0E996 /* TBHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBHTTPSessionManager.h; sourceTree = "<group>"; };
 		1CE32D211D68AEFB00C0E996 /* TBHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = TBHTTPSessionManager.m; sourceTree = "<group>"; tabWidth = 2; };
+		1CE966F71D69FD96004594E8 /* TBSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBSerialization.h; sourceTree = "<group>"; };
+		1CE966F81D69FD96004594E8 /* TBSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBSerialization.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,8 @@
 			children = (
 				1CE32D0C1D68ABD800C0E996 /* AppDelegate.h */,
 				1CE32D0D1D68ABD800C0E996 /* AppDelegate.m */,
+				1CE966F71D69FD96004594E8 /* TBSerialization.h */,
+				1CE966F81D69FD96004594E8 /* TBSerialization.m */,
 				1CE32D201D68AEFB00C0E996 /* TBHTTPSessionManager.h */,
 				1CE32D211D68AEFB00C0E996 /* TBHTTPSessionManager.m */,
 				1CE32D1D1D68ADEA00C0E996 /* TBURLSessionManager.h */,
@@ -155,6 +160,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CE966F91D69FD96004594E8 /* TBSerialization.m in Sources */,
 				1CE32D111D68ABD800C0E996 /* main.m in Sources */,
 				1CE32D1F1D68ADEA00C0E996 /* TBURLSessionManager.m in Sources */,
 				1CE32D221D68AEFB00C0E996 /* TBHTTPSessionManager.m in Sources */,
