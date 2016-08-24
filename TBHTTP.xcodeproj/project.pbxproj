@@ -17,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1CDCEBD31D6E46D70001AFAF /* TBHTTP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBHTTP.h; sourceTree = "<group>"; };
 		1CE32D091D68ABD800C0E996 /* TBHTTP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TBHTTP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CE32D0C1D68ABD800C0E996 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1CE32D0D1D68ABD800C0E996 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -84,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				1CE32D101D68ABD800C0E996 /* main.m */,
+				1CDCEBD31D6E46D70001AFAF /* TBHTTP.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
