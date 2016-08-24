@@ -46,6 +46,7 @@
   self.baseURL = url;
   self.requestSerializer = [TBHTTPRequestSerializer serializer];
   self.responseSerializer = [TBJSONResponseSerializer serializer];
+  self.challengeHandler = [TBChallengeHandler new];
   return self;
 }
 
@@ -59,6 +60,12 @@
 {
   NSParameterAssert(responseSerializer);
   [super setResponseSerializer:responseSerializer];
+}
+
+-(void)setChallengeHandler:(TBChallengeHandler *)challengeHandler
+{
+  NSParameterAssert(challengeHandler);
+  [super setChallengeHandler:challengeHandler];
 }
 
 #pragma mark - Public Methods

@@ -28,7 +28,8 @@
   return self;
 }
 
--(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+-(void)URLSession:(NSURLSession *)session
+         dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
   if (data)
   {
@@ -36,7 +37,8 @@
   }
 }
 
--(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
+-(void)URLSession:(NSURLSession *)session
+             task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
   NSError *serializationError = nil;
   id responseObject = [self.sessionManager.responseSerializer
@@ -45,7 +47,8 @@
   
   if (serializationError)
   {
-    TBHTTPResponseSerializer *httpSerializer = [TBHTTPResponseSerializer serializer];
+    TBHTTPResponseSerializer *httpSerializer =
+    [TBHTTPResponseSerializer serializer];
     if ([[task.response MIMEType] isEqualToString:httpSerializer.MIMEType])
     {
       NSError *httpSerializationError = nil;
@@ -62,6 +65,165 @@
   }
   
   self.completion(task.response, responseObject, error);
+}
+
+@end
+
+#pragma mark - TBChallengeHandler
+//------------------------------------------------------------------------
+@interface TBChallengeHandler()
+@property (nonatomic) TBSSLPinningMode SSLPinningMode;
+@property (nonatomic) BOOL excludeTrustedHosts;
+@property (nonatomic) NSArray *trustedHosts;
+@end
+
+@implementation TBChallengeHandler
+
+-(instancetype)init
+{
+  if (!(self = [super init])) return nil;
+  self.SSLPinningMode = TBSSLPinningModeNone;
+  self.pinnedCertificatePaths = [NSMutableArray new];
+  return self;
+}
+
++ (instancetype)challengeHandlerWithSSLPinningMode: (TBSSLPinningMode)mode
+{
+  TBChallengeHandler *challengeHanlder = [self new];
+  challengeHanlder.SSLPinningMode = mode;
+  return challengeHanlder;
+}
+
++ (instancetype)challengeHandlerWithSSLPinningMode: (TBSSLPinningMode)mode
+                          pinnedCertificatatePaths: (NSArray <NSString*> *)pinnedCerts
+{
+  TBChallengeHandler *challengeHanlder =
+  [self challengeHandlerWithSSLPinningMode:mode];
+  challengeHanlder.pinnedCertificatePaths = pinnedCerts;
+  return challengeHanlder;
+}
+
++ (NSArray *)validCertTypes
+{
+  return @[@"cer", @"der"];
+}
+
++ (NSMutableArray *)retrieveCertificatePathsInBundle:(NSBundle *)bundle
+{
+  NSMutableArray *certPaths = [NSMutableArray new];
+  NSArray *certTypes = [self validCertTypes];
+  
+  for (NSString *types in certTypes)
+  {
+    [certPaths addObjectsFromArray:
+     [bundle pathsForResourcesOfType:types inDirectory:nil]];
+  }
+
+  return certPaths;
+}
+
+-(void)setPinnedCertificatePaths:(NSMutableArray<NSString *> *)pinnedCertificatePaths
+{
+  for (NSString *path in pinnedCertificatePaths)
+  {
+    [self validateFilePathForCert:path];
+  }
+  
+  NSLog(@"%@", pinnedCertificatePaths);
+  _pinnedCertificatePaths = pinnedCertificatePaths;
+}
+
+- (void)validateFilePathForCert: (NSString *)path
+{
+  BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path
+                                                     isDirectory:nil];
+  NSAssert(exists,
+           ([NSString stringWithFormat:@"%@ is not a valid file path", path]));
+  
+  NSURL *fileURL = [NSURL fileURLWithPath:path];
+  NSString *extention = [fileURL pathExtension];
+  NSString *assertError =
+  [NSString stringWithFormat:@"%@ is not a valid certificate type."
+   " Please convert ""%@"" to one of the following: %@", extention,
+   [fileURL lastPathComponent], [TBChallengeHandler validCertTypes]];
+  NSAssert([[TBChallengeHandler validCertTypes] containsObject:extention],
+           assertError);
+}
+
+- (void)excludeTrustedHosts:(NSArray<NSString *> *)trustedHosts
+{
+  self.trustedHosts = trustedHosts;
+  self.excludeTrustedHosts = trustedHosts.count > 0;
+}
+
+- (NSArray *)getPinnedCertificates
+{
+  NSMutableArray *pinnedCerts = [NSMutableArray new];
+  for (NSString *path in self.pinnedCertificatePaths)
+  {
+    SecCertificateRef certRef = [self certificateRefFromCertAtPath:path];
+    [pinnedCerts addObject:(__bridge id _Nonnull)(certRef)];
+  }
+  
+  return pinnedCerts;
+}
+
+- (SecCertificateRef)certificateRefFromCertAtPath: (NSString *)path
+{
+  NSData *certData = [NSData dataWithContentsOfFile:path];
+  SecCertificateRef certRef =
+  SecCertificateCreateWithData(NULL, (__bridge CFDataRef)(certData));
+  return certRef;
+}
+
+- (BOOL)authorizeCredentialsForChallenge:(NSURLAuthenticationChallenge *)challenge
+{
+  SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
+  NSString *domain = challenge.protectionSpace.host;
+  
+  if (self.excludeTrustedHosts && [self.trustedHosts containsObject:domain])
+  {
+    return YES;
+  }
+  
+  NSMutableArray *policies = [NSMutableArray array];
+  if (self.validateDomain) {
+    [policies addObject:(__bridge_transfer id)
+     SecPolicyCreateSSL(true, (__bridge CFStringRef)domain)];
+  } else {
+    [policies addObject:(__bridge_transfer id)SecPolicyCreateBasicX509()];
+  }
+  
+  
+  NSArray *pinnedCertificates = [self getPinnedCertificates];
+  SecTrustSetPolicies(serverTrust, (__bridge CFArrayRef)policies);
+  SecTrustSetAnchorCertificates(serverTrust, (__bridge CFArrayRef)pinnedCertificates);
+  CFIndex certificateCount = SecTrustGetCertificateCount(serverTrust);
+  if (!certificateCount) return NO;
+  
+  SecTrustResultType result;
+  SecTrustEvaluate(serverTrust, &result);
+  BOOL certificateIsValid =
+  (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed);
+  if (!certificateIsValid) return NO;
+  
+  NSMutableArray *trustChain =
+  [NSMutableArray arrayWithCapacity:(NSUInteger)certificateCount];
+  
+  for (CFIndex i = 0; i < certificateCount; i++) {
+    SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, i);
+    NSLog(@"%@", certificate);
+    [trustChain addObject:(__bridge id _Nonnull)(certificate)];
+  }
+  
+  for (NSData *trustChainCertificate in trustChain)
+  {
+    if ([pinnedCertificates containsObject:trustChainCertificate]) {
+      return YES;
+    }
+  }
+  
+  return NO;
 }
 
 @end
@@ -167,5 +329,34 @@ didFinishDownloadingToURL:(NSURL *)location
   
   [self removeDelegateForTask:task];
 }
+
+-(void)URLSession:(NSURLSession *)session
+didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition,
+                            NSURLCredential * _Nullable))completionHandler
+{
+  if (![challenge.protectionSpace.authenticationMethod
+        isEqualTo:NSURLAuthenticationMethodServerTrust])
+  {
+    completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+    return;
+  }
+  
+  
+  if ([self.challengeHandler authorizeCredentialsForChallenge:challenge])
+  {
+    NSURLCredential *credential =
+    [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+    if (credential)
+      completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
+    else
+      completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+  }
+  else
+  {
+    completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+  }
+}
+
 
 @end
