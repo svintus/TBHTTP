@@ -254,6 +254,7 @@
 @property (nonatomic) NSURLSessionConfiguration *sessionConfig;
 @property (nonatomic) NSOperationQueue *operationQueue;
 @property (nonatomic) NSMutableDictionary *taskDelegates;
+@property (nonatomic) NSLock *lock;
 @end
 
 @implementation TBURLSessionManager
@@ -278,6 +279,7 @@
                   delegate:self delegateQueue:self.operationQueue];
   
   self.taskDelegates = [NSMutableDictionary new];
+  self.lock = [NSLock new];
   
   return self;
 }
@@ -315,8 +317,9 @@ didFinishDownloadingToURL:(NSURL *)location
 - (void)setDelegate:(TBURLSessionManagerTaskDelegate *)delegate
             forTask:(NSURLSessionTask *)task
 {
-  // TODO: Probably not safe
+  [self.lock lock];
   self.taskDelegates[@(task.taskIdentifier)] = delegate;
+  [self.lock unlock];
 }
 
 - (TBURLSessionManagerTaskDelegate *)delegateForTask: (NSURLSessionTask *)task
@@ -326,8 +329,9 @@ didFinishDownloadingToURL:(NSURL *)location
 
 - (void)removeDelegateForTask: (NSURLSessionTask *)task
 {
-  // TODO: Also unsafe
+  [self.lock lock];
   [self.taskDelegates removeObjectForKey:@(task.taskIdentifier)];
+  [self.lock unlock];
 }
 
 #pragma mark - Delegation
