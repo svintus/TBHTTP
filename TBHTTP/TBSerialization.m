@@ -53,6 +53,8 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
        [request setValue:value forHTTPHeaderField:field];
    }];
   
+  if (!parameters) return request;
+  
   if ([request.HTTPMethod isEqualToString:@"POST"])
   {
     if (multipartRequest)
@@ -101,7 +103,7 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
   
   request = [[self serializedRequestFromRequest:request
                                multipartRequest:multipartRequest
-                                    parameters:parameters
+                                     parameters:parameters
                                           error:error] mutableCopy];
   return request;
 }
@@ -128,15 +130,15 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
      }
    }];
   
-//  NSLog(@"%@", [parameters componentsJoinedByString:@"&"]);
+  //  NSLog(@"%@", [parameters componentsJoinedByString:@"&"]);
   return [parameters componentsJoinedByString:@"&"];
 }
 
 NSString * percentEscapedString(NSString *string)
 {
   return [string stringByAddingPercentEncodingWithAllowedCharacters:
-   [[NSCharacterSet characterSetWithCharactersInString:
-     @":/=,!$&'()*+;[]@#?^%\"`<>{}\\|~ "] invertedSet]];
+          [[NSCharacterSet characterSetWithCharactersInString:
+            @":/=,!$&'()*+;[]@#?^%\"`<>{}\\|~ "] invertedSet]];
 }
 
 NSString * mimeTypeFromFileExtension(NSString *extension)
@@ -152,7 +154,7 @@ NSString * mimeTypeFromFileExtension(NSString *extension)
 }
 
 - (void)setupParameters: (NSDictionary *) parameters
-        forPOSTRequest: (NSMutableURLRequest *)request
+         forPOSTRequest: (NSMutableURLRequest *)request
 {
   const char *parameterString =
   [[self parameterStringFromDictionarty:parameters] UTF8String];
@@ -230,7 +232,7 @@ forMultiPartPOSTRequest: (NSMutableURLRequest *)request
   
   [data appendData:[TBMultipartFormFinalBoundary(boundary)
                     dataUsingEncoding:self.stringEncoding]];
-//  NSString *altSring = [NSString stringWithUTF8String:[data bytes]];
+  //  NSString *altSring = [NSString stringWithUTF8String:[data bytes]];
   [request setHTTPBody:data];
 }
 @end

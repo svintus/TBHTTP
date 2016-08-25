@@ -40,26 +40,31 @@
 -(void)URLSession:(NSURLSession *)session
              task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-  NSError *serializationError = nil;
-  id responseObject = [self.sessionManager.responseSerializer
-                       serializedResponseFromURLResponse:task.response
-                       data:self.mutableData error:&serializationError];
+  id responseObject = nil;
   
-  if (serializationError)
+  if (!error)
   {
-    TBHTTPResponseSerializer *httpSerializer =
-    [TBHTTPResponseSerializer serializer];
-    if ([[task.response MIMEType] isEqualToString:httpSerializer.MIMEType])
+    NSError *serializationError = nil;
+    responseObject = [self.sessionManager.responseSerializer
+                      serializedResponseFromURLResponse:task.response
+                      data:self.mutableData error:&serializationError];
+    
+    if (serializationError)
     {
-      NSError *httpSerializationError = nil;
-      responseObject = [httpSerializer
-                        serializedResponseFromURLResponse:task.response
-                        data:self.mutableData error:&httpSerializationError];
-      
-      if (httpSerializationError)
+      TBHTTPResponseSerializer *httpSerializer =
+      [TBHTTPResponseSerializer serializer];
+      if ([[task.response MIMEType] isEqualToString:httpSerializer.MIMEType])
       {
-        responseObject = nil;
-        NSLog(@"Errr...");
+        NSError *httpSerializationError = nil;
+        responseObject = [httpSerializer
+                          serializedResponseFromURLResponse:task.response
+                          data:self.mutableData error:&httpSerializationError];
+        
+        if (httpSerializationError)
+        {
+          responseObject = nil;
+          NSLog(@"Errr...");
+        }
       }
     }
   }
