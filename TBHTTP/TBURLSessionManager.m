@@ -186,7 +186,20 @@
   SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
   NSString *domain = challenge.protectionSpace.host;
   
-  if (self.excludeTrustedHosts && [self.trustedHosts containsObject:domain])
+  BOOL excludeTrustedHost = NO;
+  if (self.excludeTrustedHosts)
+  {
+    for (NSString *host in self.trustedHosts)
+    {
+      if ([domain containsString:host])
+      {
+        excludeTrustedHost = YES;
+        break;
+      }
+    }
+  }
+  
+  if (excludeTrustedHost || self.SSLPinningMode == TBSSLPinningModeNone)
   {
     return YES;
   }
