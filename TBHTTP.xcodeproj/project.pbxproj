@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1CE32D0E1D68ABD800C0E996 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE32D0D1D68ABD800C0E996 /* AppDelegate.m */; };
-		1CE32D111D68ABD800C0E996 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE32D101D68ABD800C0E996 /* main.m */; };
-		1CE32D131D68ABD900C0E996 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CE32D121D68ABD900C0E996 /* Assets.xcassets */; };
-		1CE32D161D68ABD900C0E996 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CE32D141D68ABD900C0E996 /* MainMenu.xib */; };
+		1CDCEBD71D6F42E70001AFAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDCEBD61D6F42E70001AFAF /* AppDelegate.m */; };
+		1CDCEBDE1D6F43280001AFAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCEBD81D6F43280001AFAF /* Assets.xcassets */; };
+		1CDCEBE01D6F43280001AFAF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCEBDC1D6F43280001AFAF /* Info.plist */; };
+		1CDCEBE11D6F43280001AFAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDCEBDD1D6F43280001AFAF /* main.m */; };
+		1CDCEBE51D6F43830001AFAF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCEBE31D6F43830001AFAF /* MainMenu.xib */; };
 		1CE32D1F1D68ADEA00C0E996 /* TBURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE32D1E1D68ADEA00C0E996 /* TBURLSessionManager.m */; };
 		1CE32D221D68AEFB00C0E996 /* TBHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE32D211D68AEFB00C0E996 /* TBHTTPSessionManager.m */; };
 		1CE966F91D69FD96004594E8 /* TBSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE966F81D69FD96004594E8 /* TBSerialization.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1CDCEBD31D6E46D70001AFAF /* TBHTTP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBHTTP.h; sourceTree = "<group>"; };
+		1CDCEBD51D6F42E70001AFAF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1CDCEBD61D6F42E70001AFAF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1CDCEBD81D6F43280001AFAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1CDCEBDC1D6F43280001AFAF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CDCEBDD1D6F43280001AFAF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1CDCEBE41D6F43830001AFAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1CE32D091D68ABD800C0E996 /* TBHTTP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TBHTTP.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1CE32D0C1D68ABD800C0E996 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		1CE32D0D1D68ABD800C0E996 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1CE32D101D68ABD800C0E996 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1CE32D121D68ABD900C0E996 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1CE32D151D68ABD900C0E996 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		1CE32D171D68ABD900C0E996 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CE32D1D1D68ADEA00C0E996 /* TBURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBURLSessionManager.h; sourceTree = "<group>"; };
 		1CE32D1E1D68ADEA00C0E996 /* TBURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBURLSessionManager.m; sourceTree = "<group>"; };
 		1CE32D201D68AEFB00C0E996 /* TBHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -44,10 +44,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1CDCEBD41D6F42E70001AFAF /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				1CDCEBD51D6F42E70001AFAF /* AppDelegate.h */,
+				1CDCEBD61D6F42E70001AFAF /* AppDelegate.m */,
+				1CDCEBD81D6F43280001AFAF /* Assets.xcassets */,
+				1CDCEBE31D6F43830001AFAF /* MainMenu.xib */,
+				1CDCEBDC1D6F43280001AFAF /* Info.plist */,
+				1CDCEBE21D6F43430001AFAF /* Supporting Files */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
+		1CDCEBE21D6F43430001AFAF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1CDCEBDD1D6F43280001AFAF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		1CE32D001D68ABD800C0E996 = {
 			isa = PBXGroup;
 			children = (
 				1CE32D0B1D68ABD800C0E996 /* TBHTTP */,
+				1CDCEBD41D6F42E70001AFAF /* Example */,
 				1CE32D0A1D68ABD800C0E996 /* Products */,
 			);
 			indentWidth = 2;
@@ -65,29 +87,14 @@
 		1CE32D0B1D68ABD800C0E996 /* TBHTTP */ = {
 			isa = PBXGroup;
 			children = (
-				1CE32D0C1D68ABD800C0E996 /* AppDelegate.h */,
-				1CE32D0D1D68ABD800C0E996 /* AppDelegate.m */,
 				1CE966F71D69FD96004594E8 /* TBSerialization.h */,
 				1CE966F81D69FD96004594E8 /* TBSerialization.m */,
 				1CE32D201D68AEFB00C0E996 /* TBHTTPSessionManager.h */,
 				1CE32D211D68AEFB00C0E996 /* TBHTTPSessionManager.m */,
 				1CE32D1D1D68ADEA00C0E996 /* TBURLSessionManager.h */,
 				1CE32D1E1D68ADEA00C0E996 /* TBURLSessionManager.m */,
-				1CE32D121D68ABD900C0E996 /* Assets.xcassets */,
-				1CE32D141D68ABD900C0E996 /* MainMenu.xib */,
-				1CE32D171D68ABD900C0E996 /* Info.plist */,
-				1CE32D0F1D68ABD800C0E996 /* Supporting Files */,
 			);
 			path = TBHTTP;
-			sourceTree = "<group>";
-		};
-		1CE32D0F1D68ABD800C0E996 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				1CE32D101D68ABD800C0E996 /* main.m */,
-				1CDCEBD31D6E46D70001AFAF /* TBHTTP.h */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,8 +157,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CE32D131D68ABD900C0E996 /* Assets.xcassets in Resources */,
-				1CE32D161D68ABD900C0E996 /* MainMenu.xib in Resources */,
+				1CDCEBDE1D6F43280001AFAF /* Assets.xcassets in Resources */,
+				1CDCEBE01D6F43280001AFAF /* Info.plist in Resources */,
+				1CDCEBE51D6F43830001AFAF /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,20 +171,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CE966F91D69FD96004594E8 /* TBSerialization.m in Sources */,
-				1CE32D111D68ABD800C0E996 /* main.m in Sources */,
+				1CDCEBD71D6F42E70001AFAF /* AppDelegate.m in Sources */,
 				1CE32D1F1D68ADEA00C0E996 /* TBURLSessionManager.m in Sources */,
+				1CDCEBE11D6F43280001AFAF /* main.m in Sources */,
 				1CE32D221D68AEFB00C0E996 /* TBHTTPSessionManager.m in Sources */,
-				1CE32D0E1D68ABD800C0E996 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		1CE32D141D68ABD900C0E996 /* MainMenu.xib */ = {
+		1CDCEBE31D6F43830001AFAF /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1CE32D151D68ABD900C0E996 /* Base */,
+				1CDCEBE41D6F43830001AFAF /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -277,7 +285,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = P2PHZ9K5JJ;
-				INFOPLIST_FILE = TBHTTP/Info.plist;
+				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tunnelbear.TBHTTP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -290,7 +298,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = P2PHZ9K5JJ;
-				INFOPLIST_FILE = TBHTTP/Info.plist;
+				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tunnelbear.TBHTTP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
