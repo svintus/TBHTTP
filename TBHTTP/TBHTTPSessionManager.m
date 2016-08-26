@@ -121,6 +121,16 @@
 }
 
 #pragma mark -
+
+- (void)setValuesForHTTPHeaderFieldsFromDictionary: (NSDictionary *)dictionary
+{
+  [dictionary enumerateKeysAndObjectsUsingBlock:
+   ^(NSString *field, NSString *value, BOOL *stop)
+   {
+     [self setValue:value forHTTPHeaderField:field];
+   }];
+}
+
 - (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field
 {
   [self.HTTPHeaderFields setValue:value forKey:field];
@@ -133,6 +143,19 @@
   NSURLSessionDataTask *dataTask =
   [self dataTaskWithRequest:request completion:completion];
   [dataTask resume];
+}
+
+- (void)authorizeRequestsWithUsername: (NSString *)username
+                             password: (NSString *)password
+{
+  NSData *credentials = [[NSString stringWithFormat:@"%@:%@", username,password]
+                         dataUsingEncoding:NSUTF8StringEncoding];
+  NSString *base64AuthString = [credentials base64EncodedStringWithOptions:
+                                NSDataBase64Encoding64CharacterLineLength];
+  NSString *headerValue = [NSString stringWithFormat:@"Basic %@",
+                           base64AuthString];
+  
+  [self setValue: headerValue forHTTPHeaderField:@"Authorization"];
 }
 
 @end

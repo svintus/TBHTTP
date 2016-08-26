@@ -22,12 +22,17 @@ typedef void (^TBHTTPCompletion)
 - (instancetype)initWithBaseURL:(NSURL *)url
            sessionConfiguration:(NSURLSessionConfiguration *)config;
 
-- (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field;
-
 - (void)POST:(NSString *)path parameters:(NSDictionary *)parameters
   completion:(TBHTTPCompletion)completion;
 
 - (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
  completion:(TBHTTPCompletion)completion;
+
+- (void)setValuesForHTTPHeaderFieldsFromDictionary: (NSDictionary *)dictionary;
+
+- (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field;
+
+- (void)authorizeRequestsWithUsername: (NSString *)username
+                             password: (NSString *)password;
 
 @end
