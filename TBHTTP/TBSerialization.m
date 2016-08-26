@@ -8,6 +8,12 @@
 
 #import "TBSerialization.h"
 
+#if TARGET_OS_IOS
+#import <MobileCoreServices/MobileCoreServices.h>
+#else
+#import <CoreServices/CoreServices.h>
+#endif
+
 #pragma mark - TBHTTPRequestSerializer
 //------------------------------------------------------------------------
 static NSString * const TBHTTPMultipartFormBoundary = @"TBHTTPMultipartFormBoundary";

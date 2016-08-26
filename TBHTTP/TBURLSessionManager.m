@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------
 
 @interface TBURLSessionManagerTaskDelegate: NSObject
-<NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLDownloadDelegate>
+<NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
 
 @property (nonatomic) NSMutableData *mutableData;
 @property (nonatomic, weak) TBURLSessionManager *sessionManager;
@@ -70,6 +70,13 @@
   }
   
   self.completion(task.response, responseObject, error);
+}
+
+-(void)URLSession:(NSURLSession *)session
+     downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location
+{
+  // TODO:
 }
 
 @end
@@ -140,14 +147,14 @@
 
 - (void)validateFilePathForCert: (NSString *)path
 {
-  BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path
-                                                     isDirectory:nil];
+  __unused BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path
+                                                              isDirectory:nil];
   NSAssert(exists,
            ([NSString stringWithFormat:@"%@ is not a valid file path", path]));
   
   NSURL *fileURL = [NSURL fileURLWithPath:path];
   NSString *extention = [fileURL pathExtension];
-  NSString *assertError =
+  __unused NSString *assertError =
   [NSString stringWithFormat:@"%@ is not a valid certificate type."
    " Please convert ""%@"" to one of the following: %@", extention,
    [fileURL lastPathComponent], [TBChallengeHandler validCertTypes]];
@@ -358,7 +365,7 @@ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition,
                             NSURLCredential * _Nullable))completionHandler
 {
   if (![challenge.protectionSpace.authenticationMethod
-        isEqualTo:NSURLAuthenticationMethodServerTrust])
+        isEqualToString:NSURLAuthenticationMethodServerTrust])
   {
     completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
     return;
