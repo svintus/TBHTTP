@@ -13,6 +13,6 @@ Pod::Spec.new do |spec|
 	spec.osx.frameworks      = 'CoreServices'
   spec.ios.frameworks      = 'MobileCoreServices'
   spec.osx.deployment_target = '10.10'
-  spec.ios.deployment_target = '9.0'
+  spec.ios.deployment_target = '7.0'
 
 end
