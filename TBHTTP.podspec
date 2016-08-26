@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name                = 'TBHTTP'
-  spec.version             = '0.0.3'
+  spec.version             = '0.0.4'
   spec.license             = { :type => 'MIT' }
   spec.homepage            = 'https://github.com/mosobase/TBHTTP'
   spec.authors             = { 'Marcus Osobase' => 'marcus@tunnelbear.com' }
