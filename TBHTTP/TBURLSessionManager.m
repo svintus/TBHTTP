@@ -69,7 +69,9 @@
     }
   }
   
-  self.completion(task.response, responseObject, error);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    self.completion(task.response, responseObject, error);
+  });
 }
 
 -(void)URLSession:(NSURLSession *)session
