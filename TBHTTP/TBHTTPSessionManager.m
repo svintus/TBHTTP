@@ -11,7 +11,7 @@
 #pragma mark - TBHTTPSessionManager
 //------------------------------------------------------------------------
 @interface TBHTTPSessionManager()
-@property (nonatomic) NSMutableDictionary *HTTPHeaderFields;
+
 @end
 
 @implementation TBHTTPSessionManager
@@ -119,13 +119,10 @@
 
 #pragma mark -
 
-- (void)setValuesForHTTPHeaderFieldsFromDictionary: (NSDictionary *)dictionary
+-(void)setHTTPHeaderFields:(NSMutableDictionary *)HTTPHeaderFields
 {
-  [dictionary enumerateKeysAndObjectsUsingBlock:
-   ^(NSString *field, NSString *value, BOOL *stop)
-   {
-     [self setValue:value forHTTPHeaderField:field];
-   }];
+  _HTTPHeaderFields = HTTPHeaderFields;
+  self.requestSerializer.HTTPHeaderFields = HTTPHeaderFields;
 }
 
 - (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field

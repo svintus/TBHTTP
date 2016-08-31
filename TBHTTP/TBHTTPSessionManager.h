@@ -15,10 +15,7 @@ typedef void (^TBHTTPCompletion)
 @interface TBHTTPSessionManager : TBURLSessionManager
 
 @property (nonatomic, nullable) NSURL *baseURL;
-<<<<<<< HEAD
-=======
 @property (nonatomic, nullable, copy) NSMutableDictionary *HTTPHeaderFields;
->>>>>>> fd3e8dc... f
 @property (nonatomic) TBHTTPRequestSerializer *requestSerializer;
 
 + (instancetype)sessionManager;
@@ -32,8 +29,6 @@ typedef void (^TBHTTPCompletion)
 
 - (void)GET:(NSString *)path parameters:(nullable NSDictionary *)parameters
  completion:(TBHTTPCompletion)completion;
-
-- (void)setValuesForHTTPHeaderFieldsFromDictionary: (nullable NSDictionary *)dictionary;
 
 - (void)setValue:(nullable NSString *)value forHTTPHeaderField:(NSString *)field;
 
