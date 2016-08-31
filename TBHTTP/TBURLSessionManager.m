@@ -176,7 +176,7 @@ didFinishDownloadingToURL:(NSURL *)location
   for (NSString *path in self.pinnedCertificatePaths)
   {
     SecCertificateRef certRef = [self certificateRefFromCertAtPath:path];
-    [pinnedCerts addObject:(__bridge id _Nonnull)(certRef)];
+    [pinnedCerts addObject:(__bridge_transfer id _Nonnull)(certRef)];
   }
   
   return pinnedCerts;

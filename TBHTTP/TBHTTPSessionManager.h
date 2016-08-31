@@ -8,31 +8,37 @@
 
 #import "TBURLSessionManager.h"
 
+NS_ASSUME_NONNULL_BEGIN
 typedef void (^TBHTTPCompletion)
-(NSURLResponse *response, id responseObject, NSError *error);
+(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error);
 
 @interface TBHTTPSessionManager : TBURLSessionManager
 
-@property (nonatomic) NSURL *baseURL;
-@property (nonatomic) TBHTTPRequestSerializer  *requestSerializer;
+@property (nonatomic, nullable) NSURL *baseURL;
+<<<<<<< HEAD
+=======
+@property (nonatomic, nullable, copy) NSMutableDictionary *HTTPHeaderFields;
+>>>>>>> fd3e8dc... f
+@property (nonatomic) TBHTTPRequestSerializer *requestSerializer;
 
 + (instancetype)sessionManager;
-- (instancetype)initWithBaseURL:(NSURL *)url;
-- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)config;
-- (instancetype)initWithBaseURL:(NSURL *)url
-           sessionConfiguration:(NSURLSessionConfiguration *)config;
+- (instancetype)initWithBaseURL:(nullable NSURL *)url;
+- (instancetype)initWithSessionConfiguration:(nullable NSURLSessionConfiguration *)config;
+- (instancetype)initWithBaseURL:(nullable NSURL *)url
+           sessionConfiguration:(nullable NSURLSessionConfiguration *)config;
 
-- (void)POST:(NSString *)path parameters:(NSDictionary *)parameters
+- (void)POST:(NSString *)path parameters:(nullable NSDictionary *)parameters
   completion:(TBHTTPCompletion)completion;
 
-- (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
+- (void)GET:(NSString *)path parameters:(nullable NSDictionary *)parameters
  completion:(TBHTTPCompletion)completion;
 
-- (void)setValuesForHTTPHeaderFieldsFromDictionary: (NSDictionary *)dictionary;
+- (void)setValuesForHTTPHeaderFieldsFromDictionary: (nullable NSDictionary *)dictionary;
 
-- (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field;
+- (void)setValue:(nullable NSString *)value forHTTPHeaderField:(NSString *)field;
 
 - (void)authorizeRequestsWithUsername: (NSString *)username
                              password: (NSString *)password;
 
 @end
+NS_ASSUME_NONNULL_END

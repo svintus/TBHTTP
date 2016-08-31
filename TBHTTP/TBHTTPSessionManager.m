@@ -52,19 +52,16 @@
 
 - (void)setRequestSerializer:(TBHTTPRequestSerializer *)requestSerializer
 {
-  NSParameterAssert(requestSerializer);
   _requestSerializer = requestSerializer;
 }
 
 -(void)setResponseSerializer:(TBHTTPResponseSerializer *)responseSerializer
 {
-  NSParameterAssert(responseSerializer);
   [super setResponseSerializer:responseSerializer];
 }
 
 -(void)setChallengeHandler:(TBChallengeHandler *)challengeHandler
 {
-  NSParameterAssert(challengeHandler);
   [super setChallengeHandler:challengeHandler];
 }
 

@@ -8,18 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
 //------------------------------------------------------------------------
 @protocol TBURLRequestSerialization
 - (NSURLRequest *)serializedRequestFromRequest: (NSURLRequest *)request
                               multipartRequest: (BOOL)multipartRequest
-                                    parameters: (id)parameters
+                                    parameters: (nullable id)parameters
                                          error: (NSError **)error;
 @end
 
 @interface TBHTTPRequestSerializer : NSObject <TBURLRequestSerialization>
 + (instancetype)serializer;
 - (NSURLRequest *)requestWithURL:(NSURL *)url method:(NSString *)method
-                      parameters:(id)parameters error:(NSError **)error;
+                      parameters:(nullable id)parameters
+                           error:(NSError **)error;
 
 @property (nonatomic) NSDictionary *HTTPHeaderFields;
 @property (nonatomic) NSStringEncoding stringEncoding;
@@ -47,3 +49,4 @@
 @interface TBJSONResponseSerializer : TBHTTPResponseSerializer
 
 @end
+NS_ASSUME_NONNULL_END

@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "TBSerialization.h"
 
+NS_ASSUME_NONNULL_BEGIN
 typedef void (^TBURLSessionTaskBlock)
-(NSURLResponse *response, id responseObject, NSError *error);
+(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error);
 
 @interface TBChallengeHandler: NSObject
 
@@ -21,7 +22,7 @@ typedef NS_ENUM(NSUInteger, TBSSLPinningMode) {
 
 @property (nonatomic, readonly) TBSSLPinningMode SSLPinningMode;
 @property (nonatomic) BOOL validateDomain;
-@property (nonatomic) NSArray <NSString *> *pinnedCertificatePaths;
+@property (nonatomic, copy) NSArray <NSString *> *pinnedCertificatePaths;
 
 - (BOOL)authorizeCredentialsForChallenge: (NSURLAuthenticationChallenge *)challenge;
 - (void)excludeTrustedHosts: (NSArray <NSString *> *)trustedHosts;
@@ -41,10 +42,11 @@ NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
 @property (nonatomic) TBHTTPResponseSerializer *responseSerializer;
 @property (nonatomic) TBChallengeHandler *challengeHandler;
 
--(instancetype)initWithSessionConfiguration: (NSURLSessionConfiguration*)config;
+-(instancetype)initWithSessionConfiguration: (nullable NSURLSessionConfiguration*)config;
 
 
 - (NSURLSessionDataTask *)dataTaskWithRequest: (NSURLRequest *)request
                                    completion: (TBURLSessionTaskBlock)completion;
 
 @end
+NS_ASSUME_NONNULL_END
