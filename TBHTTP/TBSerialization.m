@@ -166,11 +166,43 @@ static NSString * mimeTypeFromFileExtension(NSString *extension)
   return contentType ?: @"application/octet-stream";
 }
 
+static NSString * mimeTypeFromData(NSData *data)
+{
+  uint8_t c;
+  [data getBytes:&c length:1];
+  
+  switch (c) {
+    case 0xFF:
+      return @"image/jpeg";
+      break;
+    case 0x89:
+      return @"image/png";
+      break;
+    case 0x47:
+      return @"image/gif";
+      break;
+    case 0x49:
+    case 0x4D:
+      return @"image/tiff";
+      break;
+    case 0x25:
+      return @"application/pdf";
+      break;
+    case 0x46:
+      return @"text/plain";
+    case 0x50:
+      return @"application/zip";
+      break;
+    default:
+      return @"application/octet-stream";
+  }
+}
+
 - (void)setupParameters: (NSDictionary *) parameters
          forPOSTRequest: (NSMutableURLRequest *)request
 {
   const char *parameterString =
-  [[self parameterStringFromDictionarty:parameters] UTF8String];
+  [[self parameterStringFromDictionary:parameters] UTF8String];
   
   NSMutableData *data =
   [NSMutableData dataWithBytes:parameterString length:strlen(parameterString)];
@@ -214,15 +246,19 @@ forMultiPartPOSTRequest: (NSMutableURLRequest *)request
        
        if ([value isKindOfClass:[NSURL class]])
        {
-         fileName = [value lastPathComponent];
          fileData = [NSData dataWithContentsOfURL:value];
          contentType = mimeTypeFromFileExtension([value pathExtension]);
+         fileName = [value lastPathComponent];
        }
        else
        {
-         fileName = @"TBHTTPUserFile";
          fileData = value;
-         contentType = @"application/octet-stream";
+         contentType = mimeTypeFromData(fileData);
+         
+         NSString *extension = [contentType componentsSeparatedByString:@"/"][1];
+         if ([extension isEqualToString:@"octet-stream"]) extension = @"";
+         else extension = [@"." stringByAppendingString:extension];
+         fileName = [@"TBHTTPUserFile" stringByAppendingString:extension];
        }
        
        [data appendData:
