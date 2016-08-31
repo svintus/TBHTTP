@@ -68,7 +68,7 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
     else
       [self setupParameters:parameters forPOSTRequest:request];
   }
-  else //GET .. for now
+  else if ([request.HTTPMethod isEqualToString:@"GET"])
   {
     if([parameters isKindOfClass:[NSDictionary class]])
     {
@@ -87,6 +87,13 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
       [NSException raise:NSInvalidArgumentException
                   format:@"GET parameters must be provided as NSDictionary."];
   }
+  else
+  {
+    [NSException raise:NSInvalidArgumentException
+                format:@"Content type %@ is currently unimplemented in TBHTTP",
+     request.HTTPMethod];
+  }
+  
   return request;
 }
 
