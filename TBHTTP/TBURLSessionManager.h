@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, TBSSLPinningMode) {
 
 + (instancetype)challengeHandlerWithSSLPinningMode: (TBSSLPinningMode)mode;
 + (instancetype)challengeHandlerWithSSLPinningMode: (TBSSLPinningMode)mode
-                          pinnedCertificatatePaths: (NSArray <NSString*> *)pinnedCerts;
+                            pinnedCertificatePaths: (NSArray <NSString*> *)pinnedCerts;
 
 @end
 

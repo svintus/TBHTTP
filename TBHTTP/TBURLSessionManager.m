@@ -109,7 +109,7 @@ didFinishDownloadingToURL:(NSURL *)location
 }
 
 + (instancetype)challengeHandlerWithSSLPinningMode: (TBSSLPinningMode)mode
-                          pinnedCertificatatePaths: (NSArray <NSString*> *)pinnedCerts
+                            pinnedCertificatePaths: (NSArray <NSString*> *)pinnedCerts
 {
   TBChallengeHandler *challengeHanlder =
   [self challengeHandlerWithSSLPinningMode:mode];

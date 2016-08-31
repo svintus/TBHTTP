@@ -77,7 +77,7 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
       {
         NSString *urlString =
         [NSString stringWithFormat:@"%@?%@", request.URL,
-         [self parameterStringFromDictionarty:parameters]];
+         [self parameterStringFromDictionary:parameters]];
         
         request.URL = [NSURL URLWithString:urlString];
         NSLog(@"%@", urlString);
@@ -121,7 +121,7 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
   return request;
 }
 
-- (NSString *)parameterStringFromDictionarty: (NSDictionary *)dictionary
+- (NSString *)parameterStringFromDictionary: (NSDictionary *)dictionary
 {
   NSMutableArray *parameters = [NSMutableArray new];
   
@@ -315,7 +315,6 @@ forMultiPartPOSTRequest: (NSMutableURLRequest *)request
   {
     NSLog(@"JSON Serialization error: %@", serializationError);
     *error = serializationError;
-    //[NSError alloc] initWithDomain:*er code:(NSInteger) userInfo:(nullable NSDictionary *)
     return nil;
   }
   
