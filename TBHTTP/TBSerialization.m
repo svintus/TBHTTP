@@ -147,14 +147,14 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
   return [parameters componentsJoinedByString:@"&"];
 }
 
-NSString * percentEscapedString(NSString *string)
+static NSString * percentEscapedString(NSString *string)
 {
   return [string stringByAddingPercentEncodingWithAllowedCharacters:
           [[NSCharacterSet characterSetWithCharactersInString:
             @":/=,!$&'()*+;[]@#?^%\"`<>{}\\|~ "] invertedSet]];
 }
 
-NSString * mimeTypeFromFileExtension(NSString *extension)
+static NSString * mimeTypeFromFileExtension(NSString *extension)
 {
   NSString *UTI = (__bridge_transfer NSString *)
   UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
