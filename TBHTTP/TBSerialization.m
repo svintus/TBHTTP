@@ -7,7 +7,6 @@
 //
 
 #import "TBSerialization.h"
-#import "utils.h"
 
 #if TARGET_OS_IOS
 #import <MobileCoreServices/MobileCoreServices.h>

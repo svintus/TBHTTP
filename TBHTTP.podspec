@@ -1,10 +1,10 @@
 Pod::Spec.new do |spec|
   spec.name                = 'TBHTTP'
-  spec.version             = '0.0.6'
+  spec.version             = '0.0.7'
   spec.license             = { :type => 'MIT' }
   spec.homepage            = 'https://github.com/mosobase/TBHTTP'
   spec.authors             = { 'Marcus Osobase' => 'marcus@tunnelbear.com' }
-  spec.summary             = 'Light NSURLSession wrapper'	
+  spec.summary             = 'Light NSURLSession wrapper'
   spec.source              = { :git => 'https://github.com/mosobase/TBHTTP.git', :tag => spec.version.to_s, :branch => 'framework' }
   spec.source_files        = 'TBHTTP/*.{h,m}'
 	spec.public_header_files = 'TBHTTP/*.h'
