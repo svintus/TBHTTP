@@ -26,6 +26,7 @@
 		1CDCEC171D7070FE0001AFAF /* TBSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBSerialization.m; sourceTree = "<group>"; };
 		1CDCEC181D7070FE0001AFAF /* TBURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBURLSessionManager.h; sourceTree = "<group>"; };
 		1CDCEC191D7070FE0001AFAF /* TBURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBURLSessionManager.m; sourceTree = "<group>"; };
+		1CE781721D89F94900C5E076 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 			children = (
 				1CB4AE821D708EAD000D27A6 /* Info.plist */,
 				1CB4AE831D708EAD000D27A6 /* TBHTTP.h */,
+				1CE781721D89F94900C5E076 /* utils.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

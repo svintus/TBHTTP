@@ -7,6 +7,7 @@
 //
 
 #import "TBSerialization.h"
+#import "utils.h"
 
 #if TARGET_OS_IOS
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -225,9 +226,10 @@ forMultiPartPOSTRequest: (NSMutableURLRequest *)request
   NSMutableData *data = [NSMutableData new];
   [data appendData:[TBMultipartFormInitialBoundary(boundary)
                     dataUsingEncoding:self.stringEncoding]];
-  
+  @weakifySelf()
   [parameters enumerateKeysAndObjectsUsingBlock: ^(id key, id value, BOOL *stop)
    {
+     @strongifySelf()
      if ([value isKindOfClass:[NSString class]] ||
          [value isKindOfClass:[NSNumber class]])
      {

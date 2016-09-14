@@ -43,6 +43,7 @@ NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
 @property (nonatomic) TBChallengeHandler *challengeHandler;
 
 -(instancetype)initWithSessionConfiguration: (nullable NSURLSessionConfiguration*)config;
+-(void)invalidateSession;
 
 
 - (NSURLSessionDataTask *)dataTaskWithRequest: (NSURLRequest *)request

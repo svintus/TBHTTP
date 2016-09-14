@@ -63,14 +63,14 @@
         if (httpSerializationError)
         {
           responseObject = nil;
-          NSLog(@"Errr...");
+//          NSLog(@"Errr...");
         }
       }
     }
   }
   
   dispatch_async(dispatch_get_main_queue(), ^{
-    self.completion(task.response, responseObject, error);
+    if(self.completion) self.completion(task.response, responseObject, error);
   });
 }
 
@@ -143,7 +143,7 @@ didFinishDownloadingToURL:(NSURL *)location
     [self validateFilePathForCert:path];
   }
   
-  NSLog(@"%@", pinnedCertificatePaths);
+//  NSLog(@"%@", pinnedCertificatePaths);
   _pinnedCertificatePaths = pinnedCertificatePaths;
 }
 
@@ -239,7 +239,7 @@ didFinishDownloadingToURL:(NSURL *)location
   
   for (CFIndex i = 0; i < certificateCount; i++) {
     SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, i);
-    NSLog(@"%@", certificate);
+//    NSLog(@"%@", certificate);
     [trustChain addObject:(__bridge id _Nonnull)(certificate)];
   }
   
@@ -291,6 +291,13 @@ didFinishDownloadingToURL:(NSURL *)location
   self.lock = [NSLock new];
   
   return self;
+}
+
+-(void)invalidateSession
+{
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self.session invalidateAndCancel];
+  });
 }
 
 -(void)URLSession:(NSURLSession *)session
