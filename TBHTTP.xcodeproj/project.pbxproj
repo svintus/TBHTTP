@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1CB4AE851D708EAD000D27A6 /* TBHTTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB4AE831D708EAD000D27A6 /* TBHTTP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1CC64CCC1D9C500200C94FBE /* TBURLSessionLogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CC64CCA1D9C500200C94FBE /* TBURLSessionLogManager.h */; };
+		1CC64CCD1D9C500200C94FBE /* TBURLSessionLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC64CCB1D9C500200C94FBE /* TBURLSessionLogManager.m */; };
 		1CDCEC1C1D7070FE0001AFAF /* TBHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CDCEC141D7070FE0001AFAF /* TBHTTPSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1CDCEC1D1D7070FE0001AFAF /* TBHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDCEC151D7070FE0001AFAF /* TBHTTPSessionManager.m */; };
 		1CDCEC1E1D7070FE0001AFAF /* TBSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CDCEC161D7070FE0001AFAF /* TBSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileReference section */
 		1CB4AE821D708EAD000D27A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Framework/Info.plist; sourceTree = SOURCE_ROOT; };
 		1CB4AE831D708EAD000D27A6 /* TBHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TBHTTP.h; path = Framework/TBHTTP.h; sourceTree = SOURCE_ROOT; };
+		1CC64CCA1D9C500200C94FBE /* TBURLSessionLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBURLSessionLogManager.h; sourceTree = "<group>"; };
+		1CC64CCB1D9C500200C94FBE /* TBURLSessionLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBURLSessionLogManager.m; sourceTree = "<group>"; };
 		1CDCEBEF1D706F7D0001AFAF /* TBHTTP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TBHTTP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CDCEC141D7070FE0001AFAF /* TBHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBHTTPSessionManager.h; sourceTree = "<group>"; };
 		1CDCEC151D7070FE0001AFAF /* TBHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBHTTPSessionManager.m; sourceTree = "<group>"; };
@@ -49,6 +53,8 @@
 				1CDCEC171D7070FE0001AFAF /* TBSerialization.m */,
 				1CDCEC181D7070FE0001AFAF /* TBURLSessionManager.h */,
 				1CDCEC191D7070FE0001AFAF /* TBURLSessionManager.m */,
+				1CC64CCA1D9C500200C94FBE /* TBURLSessionLogManager.h */,
+				1CC64CCB1D9C500200C94FBE /* TBURLSessionLogManager.m */,
 				1CDCEC221D70711B0001AFAF /* Supporting Files */,
 			);
 			path = TBHTTP;
@@ -91,6 +97,7 @@
 			files = (
 				1CB4AE851D708EAD000D27A6 /* TBHTTP.h in Headers */,
 				1CDCEC1E1D7070FE0001AFAF /* TBSerialization.h in Headers */,
+				1CC64CCC1D9C500200C94FBE /* TBURLSessionLogManager.h in Headers */,
 				1CDCEC1C1D7070FE0001AFAF /* TBHTTPSessionManager.h in Headers */,
 				1CDCEC201D7070FE0001AFAF /* TBURLSessionManager.h in Headers */,
 			);
@@ -168,6 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CDCEC1F1D7070FE0001AFAF /* TBSerialization.m in Sources */,
+				1CC64CCD1D9C500200C94FBE /* TBURLSessionLogManager.m in Sources */,
 				1CDCEC211D7070FE0001AFAF /* TBURLSessionManager.m in Sources */,
 				1CDCEC1D1D7070FE0001AFAF /* TBHTTPSessionManager.m in Sources */,
 			);

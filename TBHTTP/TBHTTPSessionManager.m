@@ -152,4 +152,12 @@
   [self setValue: headerValue forHTTPHeaderField:@"Authorization"];
 }
 
+#pragma mark -
+
+- (void)routeLogsToBlock:(TBURLSessionLoggingBlock)logger
+                logLevel:(TBLogLevel)logLevel
+{
+  [super routeLogsToBlock:logger logLevel:logLevel];
+}
+
 @end

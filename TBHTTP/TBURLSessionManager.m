@@ -55,21 +55,23 @@
       [TBHTTPResponseSerializer serializer];
       if ([[task.response MIMEType] isEqualToString:httpSerializer.MIMEType])
       {
-        NSError *httpSerializationError = nil;
         responseObject = [httpSerializer
                           serializedResponseFromURLResponse:task.response
-                          data:self.mutableData error:&httpSerializationError];
-        
-        if (httpSerializationError)
-        {
-          responseObject = nil;
-//          NSLog(@"Errr...");
-        }
+                          data:self.mutableData error:nil];
       }
     }
   }
   
   dispatch_async(dispatch_get_main_queue(), ^{
+    if ([self.mutableData length] == 0)
+    {
+      [self.sessionManager.logManager logVerbose:@"No response"];
+    }
+    
+    [self.sessionManager.logManager logError:error];
+    [self.sessionManager.logManager logResponse:(NSHTTPURLResponse*)task.response
+                                 responseObject:responseObject];
+    
     if(self.completion) self.completion(task.response, responseObject, error);
   });
 }
@@ -280,6 +282,7 @@ didFinishDownloadingToURL:(NSURL *)location
   
   if (!config) config = [NSURLSessionConfiguration defaultSessionConfiguration];
   self.sessionConfig = config;
+  self.logManager = [TBURLSessionLogManager new];
   
   self.operationQueue = [NSOperationQueue new];
   self.operationQueue.maxConcurrentOperationCount = 1;
@@ -315,6 +318,7 @@ didFinishDownloadingToURL:(NSURL *)location
 {
   NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request];
   [self addDelegateForDataTask:dataTask withCompletion:completion];
+  [self.logManager logRequest:request];
   return dataTask;
 }
 
@@ -365,7 +369,6 @@ didFinishDownloadingToURL:(NSURL *)location
 {
   TBURLSessionManagerTaskDelegate *delegate = [self delegateForTask:task];
   [delegate URLSession:session task:task didCompleteWithError:error];
-  
   [self removeDelegateForTask:task];
 }
 
@@ -397,5 +400,13 @@ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition,
   }
 }
 
+#pragma mark -
+
+- (void)routeLogsToBlock: (TBURLSessionLoggingBlock)logger
+                logLevel: (TBLogLevel)logLevel
+{
+  self.logManager.logger = logger;
+  self.logManager.logLevel = logLevel;
+}
 
 @end

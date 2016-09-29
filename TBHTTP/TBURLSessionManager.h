@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "TBSerialization.h"
+#import "TBURLSessionLogManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 typedef void (^TBURLSessionTaskBlock)
 (NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error);
 
+//------------------------------------------------------------------------
 @interface TBChallengeHandler: NSObject
 
 typedef NS_ENUM(NSUInteger, TBSSLPinningMode) {
@@ -35,12 +37,14 @@ typedef NS_ENUM(NSUInteger, TBSSLPinningMode) {
 
 @end
 
+//------------------------------------------------------------------------
 @interface TBURLSessionManager : NSObject
 <NSURLSessionDelegate, NSURLSessionTaskDelegate,
 NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
 
 @property (nonatomic) TBHTTPResponseSerializer *responseSerializer;
 @property (nonatomic) TBChallengeHandler *challengeHandler;
+@property (nonatomic) TBURLSessionLogManager *logManager;
 
 -(instancetype)initWithSessionConfiguration: (nullable NSURLSessionConfiguration*)config;
 -(void)invalidateSession;
@@ -48,6 +52,9 @@ NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
 
 - (NSURLSessionDataTask *)dataTaskWithRequest: (NSURLRequest *)request
                                    completion: (TBURLSessionTaskBlock)completion;
+
+- (void)routeLogsToBlock: (TBURLSessionLoggingBlock)logger
+                logLevel: (TBLogLevel)logLevel;
 
 @end
 NS_ASSUME_NONNULL_END

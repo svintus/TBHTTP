@@ -35,5 +35,8 @@ typedef void (^TBHTTPCompletion)
 - (void)authorizeRequestsWithUsername: (NSString *)username
                              password: (NSString *)password;
 
+- (void)routeLogsToBlock: (TBURLSessionLoggingBlock)logger
+                logLevel: (TBLogLevel)logLevel;
+
 @end
 NS_ASSUME_NONNULL_END
