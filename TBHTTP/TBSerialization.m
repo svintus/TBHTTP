@@ -80,7 +80,6 @@ static inline NSString * TBMultipartFormFinalBoundary(NSString *boundary) {
          [self parameterStringFromDictionary:parameters]];
         
         request.URL = [NSURL URLWithString:urlString];
-        NSLog(@"%@", urlString);
       }
     }
     else
@@ -318,6 +317,73 @@ forMultiPartPOSTRequest: (NSMutableURLRequest *)request
 @end
 
 
+#pragma mark - TBJSONRequestSerializer
+//------------------------------------------------------------------------
+@interface TBJSONRequestSerializer()
+@end
+
+@implementation TBJSONRequestSerializer
+
+-(NSURLRequest *)serializedRequestFromRequest:(NSMutableURLRequest *)request
+                             multipartRequest: (BOOL)multipartRequest
+                                   parameters:(id)parameters
+                                        error:(NSError *__autoreleasing *)error
+{
+  [self.HTTPHeaderFields enumerateKeysAndObjectsUsingBlock:
+   ^(NSString *field, NSString *value, BOOL *stop)
+   {
+     if (![request valueForHTTPHeaderField:field])
+       [request setValue:value forHTTPHeaderField:field];
+   }];
+  
+  if (!parameters) return request;
+  
+  if ([request.HTTPMethod isEqualToString:@"POST"])
+  {
+    [self setupParameters:parameters forJSONRequest:request];
+  }
+  else
+  {
+    [NSException raise:NSInvalidArgumentException
+                format:@"Content type %@ is currently unimplemented in TBHTTP",
+     request.HTTPMethod];
+  }
+  
+  return request;
+}
+
+- (void)setupParameters: (NSDictionary *) parameters
+         forJSONRequest: (NSMutableURLRequest *)request
+{
+  NSError *error;
+  NSData *jsonData =
+  [NSJSONSerialization dataWithJSONObject:parameters
+                                  options:NSJSONWritingPrettyPrinted
+                                    error:&error];
+  
+  if (error) {
+    NSLog(@"JSON Serialization error: %@", error);
+  }
+  else {
+    NSString *parameterString =
+    [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    NSData *data = [parameterString dataUsingEncoding:NSUTF8StringEncoding];
+    [request setHTTPBody:data];
+    
+//    NSLog(@"JSON String: %@", parameterString);
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%lu",
+                       (unsigned long)[jsonData length]]
+   forHTTPHeaderField:@"Content-Length"];
+  }
+}
+
+@end
+
+#pragma mark - TBJSONResponseSerializer
+//------------------------------------------------------------------------
 @interface TBJSONResponseSerializer()
 
 @end
