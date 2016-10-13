@@ -70,18 +70,12 @@
 - (void)POST:(NSString *)path parameters:(NSDictionary *)parameters
   completion:(TBHTTPCompletion)completion
 {
-  NSURL *requestURL;
-  
-  if (self.baseURL)
-    requestURL = [NSURL URLWithString:path relativeToURL: self.baseURL];
-  else
-    requestURL = [NSURL URLWithString:path];
-  
-  
   NSError *serializationError = nil;
   NSURLRequest *request =
-  [self.requestSerializer requestWithURL:requestURL method:@"POST"
-                              parameters:parameters error:&serializationError];
+    [self.requestSerializer requestWithURL: [self requestURLWithPath: path]
+                                    method: @"POST"
+                                parameters: parameters
+                                     error: &serializationError];
   
   if (serializationError)
   {
@@ -95,18 +89,12 @@
 -  (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
   completion:(TBHTTPCompletion)completion
 {
-  NSURL *requestURL;
-  
-  if (self.baseURL)
-    requestURL = [NSURL URLWithString:path relativeToURL: self.baseURL];
-  else
-    requestURL = [NSURL URLWithString:path];
-  
-  
   NSError *serializationError = nil;
   NSURLRequest *request =
-  [self.requestSerializer requestWithURL:requestURL method:@"GET"
-                              parameters:parameters error:&serializationError];
+    [self.requestSerializer requestWithURL: [self requestURLWithPath: path]
+                                    method: @"GET"
+                                parameters: parameters
+                                     error: &serializationError];
   
   if (serializationError)
   {
@@ -158,6 +146,21 @@
                 logLevel:(TBLogLevel)logLevel
 {
   [super routeLogsToBlock:logger logLevel:logLevel];
+}
+
+//------------------------------------------------------------------------
+#pragma mark - Private Methods
+
+- (NSURL *)requestURLWithPath: (NSString *)path
+{
+  if (self.baseURL) {
+    return
+      [NSURL URLWithString:
+        [self.baseURL.absoluteString stringByAppendingPathComponent: path]];
+  }
+  else {
+    return [NSURL URLWithString: path];
+  }
 }
 
 @end
